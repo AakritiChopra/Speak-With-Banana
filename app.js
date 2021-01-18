@@ -1,32 +1,54 @@
-var btnTranslate = document.querySelector("#btn-translate");
-var txtInput = document.querySelector("#txt-input");
-var outputDiv = document.querySelector("#output");  
+//get the button
+var btnTranslate = document.querySelector('#btn-translate');
 
-//var serverURL = "https://lessonfourapi.tanaypratap.repl.co/translate/yoda.json";
+//get the input
+var txtInput = document.querySelector('#txt-input');
 
-var serverURL = "https://api.funtranslations.com/translate/minion.json"
+//get the output
+var outputDiv = document.querySelector('#outputDiv');
 
-function getTranslationURL(input){
-    return  serverURL + "?" + "text=" + input
+//get the Server URL
+var serverURL = "https://api.funtranslations.com/translate/sith.json";
+
+
+//define translation function
+function getTranslationURL(input)
+{
+    return serverURL + "?" + "text=" + input;
+
 }
 
-function errorHandler(error){
-    console.log("Error Occured", error);
-    alert("Something wrong with Server! Try again after some time")
+//Handle Error
+function ErrorHandler(error)
+{
+    console.log('Error with the server');
+    alert('Check the server connection!');
 }
 
-function clickHandler(){
-   // outputDiv.innerText = "akakkakakaka" + txtInput.value;
-   var inputText = txtInput.value; //taking input
+//ClickHandler
+function clickHandler()
+{
+    //1. read the input text
+var inputText = txtInput.value;
+    //2. Go and fetch the URL
+fetch(getTranslationURL(inputText)).
+    //3. convert url into response.json
+                                then(response => response.json()).
+                                //4. output it 
+                                                    //then(json => console.log(json.contents.translated))
+                                                    then(json =>
+                                                        {
+                                                            var translatedText = json.contents.translated;
+                                                            outputDiv.innerText = translatedText;
+                                                        })
+                                            
+                                                         //5.Handle Error
+                                                                .catch(ErrorHandler);
+}
 
-   //calling server for processing
-   fetch(getTranslationURL(inputText))
-   .then(response => response.json())
-   .then(json => {
-       var translatedText = json.contents.translated;
-       outputDiv.innerText = translatedText; //output
-   })
-   .catch(errorHandler)
-};
 
-btnTranslate.addEventListener("click", clickHandler);
+
+//Call the button event 
+btnTranslate.addEventListener("click" , clickHandler);
+
+
