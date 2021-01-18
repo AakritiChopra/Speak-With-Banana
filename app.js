@@ -8,7 +8,7 @@ var txtInput = document.querySelector('#txt-input');
 var outputDiv = document.querySelector('#outputDiv');
 
 //get the Server URL
-var serverURL = "https://api.funtranslations.com/translate/sith.json";
+var serverURL = "https://api.funtranslations.com/translate/minion.json";
 
 
 //define translation function
